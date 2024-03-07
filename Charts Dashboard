@@ -1,0 +1,1391 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Real Time Data",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": 4,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "New link",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "grafana-postgresql-datasource",
+        "uid": "d9edce67-7bdc-48a2-b128-c50f2ffe063f"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 60,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "10.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "grafana-postgresql-datasource",
+            "uid": "d9edce67-7bdc-48a2-b128-c50f2ffe063f"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  \"Time\" AS \"Time\",\r\n  \"0112\" AS \"HP\", \r\n  \"0108\" AS \"Bit Depth\", \r\n  \"0110\" AS \"Hole Depth\", \r\n  \"0111\" AS \"TVD\", \r\n  \"0139\" AS \"Lag Depth\", \r\n  \"0116\" AS \"WOB\", \r\n  \"0114\" AS \"HKLD\",\r\n  \"0130\" AS \"GPM\", \r\n  \"0121\" AS \"SPP\", \r\n  \"3021\" AS \"SPP Diff\", \r\n  \"0122\" AS \"CSG\", \r\n  \"0113\" AS \"ROP\", \r\n  \"0120\" AS \"RPM\", \r\n  \"3019\" AS \"TD RPM\", \r\n  \"3018\" AS \"Motor RPM\", \r\n  \"0118\" AS \"Torque\",\r\n  \"3012\" AS \"Total SPM\", \r\n  \"3039\" AS \"Down Strokes\", \r\n  \"0138\" AS \"Lag Strokes\", \r\n  \"0137\" AS \"Total Strokes\", \r\n  \"3013\" AS \"Active bbls\", \r\n  \"3009\" AS \"Bit Interval ft\", \r\n \r\n\r\n  \"3008\" / 3600 AS \"Circulation Time hr\",\r\n  CASE \r\n    WHEN \"3011\" / 60 < 0 THEN 0\r\n    ELSE \"3011\"\r\n  END AS \"Down Time h:m:s\",\r\n  CASE \r\n    WHEN \"3010\" / 60 < 0 THEN 0\r\n    ELSE \"3010\"\r\n  END AS \"Lag Time h:m:s\",\r\n  CASE \r\n    WHEN \"0137\" > \"0138\" THEN 0\r\n    WHEN \"0138\" = 0 THEN 0\r\n    ELSE (\"0138\" - \"0137\") / \"3012\" * 60\r\n  END AS \"CBU Time Left h:m:s\",\r\n  \"3007\" / 3600 AS \"Drilling Time hr\",\r\n\r\n\r\n  \"1224\" AS \"Total Hydrocarbons %\", \r\n  \"1212\" AS \"C1\", \r\n  \"1213\" AS \"C2\", \r\n  \"1214\" AS \"C3\", \r\n  \"1215\" AS \"iC4\", \r\n  \"1216\" AS \"nC4\", \r\n  \"1217\" AS \"iC5\", \r\n  \"1218\" AS \"nC5\",\r\n  \r\n  \"3030\" / 10000 AS \"GCT Total Hydrocarbons %\", \r\n  \"3020\" AS \"GCT C1\", \r\n  \"3121\" AS \"GCT C2\", \r\n  \"3022\" AS \"GCT C3\", \r\n  \"3023\" AS \"GCT iC4\", \r\n  \"3024\" AS \"GCT nC4\", \r\n  \"3025\" AS \"GCT iC5\",\r\n  \"3026\" AS \"GCT nC5\", \r\n  \"3027\" AS \"GCT C6\", \r\n  \"3028\" AS \"GCT C7\", \r\n  \"3029\" AS \"GCT C8\"\r\n  \r\nFROM postgres_time\r\nWHERE $__timeFilter(\"Time\")\r\nORDER BY rowid;\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "©Rigsite.net",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "min": 0.01,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 54,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 60,
+          "refId": "A"
+        }
+      ],
+      "title": "Total HC %",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Active bbls": true,
+              "Bit Depth": true,
+              "Bit Interval ft": true,
+              "C1": true,
+              "C2": true,
+              "C3": true,
+              "CBU Time Left h:m:s": true,
+              "CSG": true,
+              "Circulation Time hr": true,
+              "Down Strokes": true,
+              "Down Time h:m:s": true,
+              "Drilling Time hr": true,
+              "GCT C1": true,
+              "GCT C2": true,
+              "GCT C3": true,
+              "GCT C6": true,
+              "GCT C7": true,
+              "GCT C8": true,
+              "GCT Total Hydrocarbons %": true,
+              "GCT iC4": true,
+              "GCT iC5": true,
+              "GCT nC4": true,
+              "GCT nC5": true,
+              "GPM": true,
+              "HKLD": true,
+              "HP": true,
+              "Hole Depth": true,
+              "Lag Depth": true,
+              "Lag Strokes": true,
+              "Lag Time h:m:s": true,
+              "Motor RPM": true,
+              "ROP": true,
+              "RPM": true,
+              "SPP": true,
+              "SPP Diff": true,
+              "TD RPM": true,
+              "TVD": true,
+              "Torque": true,
+              "Total Hydrocarbons %": false,
+              "Total SPM": true,
+              "Total Strokes": true,
+              "WOB": true,
+              "iC4": true,
+              "iC5": true,
+              "nC4": true,
+              "nC5": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "log": 10,
+              "type": "log"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 100000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ppm",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "C1"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "C2"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "C3"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "iC4"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "nC4"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "iC5"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#934600",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "nC5"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 52,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 60,
+          "refId": "A"
+        }
+      ],
+      "title": "Gasses",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Active bbls": true,
+              "Bit Depth": true,
+              "Bit Interval ft": true,
+              "CBU Time Left h:m:s": true,
+              "CSG": true,
+              "Circulation Time hr": true,
+              "Down Strokes": true,
+              "Down Time h:m:s": true,
+              "Drilling Time hr": true,
+              "GCT C1": true,
+              "GCT C2": true,
+              "GCT C3": true,
+              "GCT C6": true,
+              "GCT C7": true,
+              "GCT C8": true,
+              "GCT Total Hydrocarbons %": true,
+              "GCT iC4": true,
+              "GCT iC5": true,
+              "GCT nC4": true,
+              "GCT nC5": true,
+              "GPM": true,
+              "HKLD": true,
+              "HP": true,
+              "Hole Depth": true,
+              "Lag Depth": true,
+              "Lag Strokes": true,
+              "Lag Time h:m:s": true,
+              "Motor RPM": true,
+              "ROP": true,
+              "RPM": true,
+              "SPP": true,
+              "SPP Diff": true,
+              "TD RPM": true,
+              "TVD": true,
+              "Torque": true,
+              "Total Hydrocarbons %": true,
+              "Total SPM": true,
+              "Total Strokes": true,
+              "WOB": true,
+              "nC5": false
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 110,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "WOB"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.scaleDistribution",
+                "value": {
+                  "type": "linear"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "custom.axisSoftMax",
+                "value": 50
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HKLD"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#ffffff",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.scaleDistribution",
+                "value": {
+                  "type": "linear"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "max",
+                "value": 400
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 55,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 60,
+          "refId": "A"
+        }
+      ],
+      "title": "Hook Position - WOB - HKLD",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Active bbls": true,
+              "Bit Depth": true,
+              "Bit Interval ft": true,
+              "C1": true,
+              "C2": true,
+              "C3": true,
+              "CBU Time Left h:m:s": true,
+              "CSG": true,
+              "Circulation Time hr": true,
+              "Down Strokes": true,
+              "Down Time h:m:s": true,
+              "Drilling Time hr": true,
+              "GCT C1": true,
+              "GCT C2": true,
+              "GCT C3": true,
+              "GCT C6": true,
+              "GCT C7": true,
+              "GCT C8": true,
+              "GCT Total Hydrocarbons %": true,
+              "GCT iC4": true,
+              "GCT iC5": true,
+              "GCT nC4": true,
+              "GCT nC5": true,
+              "GPM": true,
+              "Hole Depth": true,
+              "Lag Depth": true,
+              "Lag Strokes": true,
+              "Lag Time h:m:s": true,
+              "Motor RPM": true,
+              "ROP": true,
+              "RPM": true,
+              "SPP": true,
+              "SPP Diff": true,
+              "TD RPM": true,
+              "TVD": true,
+              "Torque": true,
+              "Total Hydrocarbons %": true,
+              "Total SPM": true,
+              "Total Strokes": true,
+              "iC4": true,
+              "iC5": true,
+              "nC4": true,
+              "nC5": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Torque"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-orange",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.scaleDistribution",
+                "value": {
+                  "type": "linear"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RPM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TD RPM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HKLD"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 56,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 60,
+          "refId": "A"
+        }
+      ],
+      "title": "Torque - RPM - TD RPM",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Active bbls": true,
+              "Bit Depth": true,
+              "Bit Interval ft": true,
+              "C1": true,
+              "C2": true,
+              "C3": true,
+              "CBU Time Left h:m:s": true,
+              "CSG": true,
+              "Circulation Time hr": true,
+              "Down Strokes": true,
+              "Down Time h:m:s": true,
+              "Drilling Time hr": true,
+              "GCT C1": true,
+              "GCT C2": true,
+              "GCT C3": true,
+              "GCT C6": true,
+              "GCT C7": true,
+              "GCT C8": true,
+              "GCT Total Hydrocarbons %": true,
+              "GCT iC4": true,
+              "GCT iC5": true,
+              "GCT nC4": true,
+              "GCT nC5": true,
+              "GPM": true,
+              "HKLD": true,
+              "HP": true,
+              "Hole Depth": true,
+              "Lag Depth": true,
+              "Lag Strokes": true,
+              "Lag Time h:m:s": true,
+              "Motor RPM": true,
+              "ROP": true,
+              "SPP": true,
+              "SPP Diff": true,
+              "TD RPM": false,
+              "TVD": true,
+              "Torque": false,
+              "Total Hydrocarbons %": true,
+              "Total SPM": true,
+              "Total Strokes": true,
+              "WOB": true,
+              "iC4": true,
+              "iC5": true,
+              "nC4": true,
+              "nC5": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "dark-blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none",
+          "unitScale": true
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SPP"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CSG"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "GPM"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-blue",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.scaleDistribution",
+                "value": {
+                  "type": "linear"
+                }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "id": 57,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 60,
+          "refId": "A"
+        }
+      ],
+      "title": "SPP - CSG - GPM",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Active bbls": true,
+              "Bit Depth": true,
+              "Bit Interval ft": true,
+              "C1": true,
+              "C2": true,
+              "C3": true,
+              "CBU Time Left h:m:s": true,
+              "Circulation Time hr": true,
+              "Down Strokes": true,
+              "Down Time h:m:s": true,
+              "Drilling Time hr": true,
+              "GCT C1": true,
+              "GCT C2": true,
+              "GCT C3": true,
+              "GCT C6": true,
+              "GCT C7": true,
+              "GCT C8": true,
+              "GCT Total Hydrocarbons %": true,
+              "GCT iC4": true,
+              "GCT iC5": true,
+              "GCT nC4": true,
+              "GCT nC5": true,
+              "HKLD": true,
+              "HP": true,
+              "Hole Depth": true,
+              "Lag Depth": true,
+              "Lag Strokes": true,
+              "Lag Time h:m:s": true,
+              "Motor RPM": true,
+              "ROP": true,
+              "RPM": true,
+              "SPP": false,
+              "SPP Diff": true,
+              "TD RPM": true,
+              "TVD": true,
+              "Time": false,
+              "Torque": true,
+              "Total Hydrocarbons %": true,
+              "Total SPM": true,
+              "Total Strokes": true,
+              "WOB": true,
+              "iC4": true,
+              "iC5": true,
+              "nC4": true,
+              "nC5": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "#7c7c7c",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": true,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": -1,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "opacity",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "stepBefore",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "none",
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 59,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "browser"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 60,
+          "refId": "A"
+        }
+      ],
+      "title": "ROP",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Active bbls": true,
+              "Bit Depth": true,
+              "Bit Interval ft": true,
+              "C1": true,
+              "C2": true,
+              "C3": true,
+              "CBU Time Left h:m:s": true,
+              "CSG": true,
+              "Circulation Time hr": true,
+              "Down Strokes": true,
+              "Down Time h:m:s": true,
+              "Drilling Time hr": true,
+              "GCT C1": true,
+              "GCT C2": true,
+              "GCT C3": true,
+              "GCT C6": true,
+              "GCT C7": true,
+              "GCT C8": true,
+              "GCT Total Hydrocarbons %": true,
+              "GCT iC4": true,
+              "GCT iC5": true,
+              "GCT nC4": true,
+              "GCT nC5": true,
+              "GPM": true,
+              "HKLD": true,
+              "HP": true,
+              "Hole Depth": true,
+              "Lag Depth": true,
+              "Lag Strokes": true,
+              "Lag Time h:m:s": true,
+              "Motor RPM": true,
+              "RPM": true,
+              "SPP": true,
+              "SPP Diff": true,
+              "TD RPM": true,
+              "TVD": true,
+              "Time": false,
+              "Torque": true,
+              "Total Hydrocarbons %": true,
+              "Total SPM": true,
+              "Total Strokes": true,
+              "WOB": true,
+              "iC4": true,
+              "iC5": true,
+              "nC4": true,
+              "nC5": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Charts",
+  "uid": "eee5498f-0aeb-4710-8658-791f21384979",
+  "version": 18,
+  "weekStart": ""
+}
