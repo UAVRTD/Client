@@ -1915,7 +1915,8 @@
         },
         "showPercentChange": false,
         "text": {
-          "titleSize": 100
+          "titleSize": 100,
+          "valueSize": 20
         },
         "textMode": "auto",
         "wideLayout": true
@@ -3339,6 +3340,6 @@
   "timezone": "",
   "title": "Gauges",
   "uid": "eee5498f-0aeb-4710-8658-791f21384988",
-  "version": 23,
+  "version": 24,
   "weekStart": ""
 }
