@@ -71,7 +71,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
+        "h": 9,
         "w": 2,
         "x": 0,
         "y": 0
@@ -1460,6 +1460,92 @@
         }
       ],
       "title": "Drilling Time hr",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "dark-green",
+                  "index": 0,
+                  "text": "Drilling"
+                },
+                "1": {
+                  "color": "dark-red",
+                  "index": 1,
+                  "text": "Tripping"
+                },
+                "2": {
+                  "color": "dark-orange",
+                  "index": 2,
+                  "text": "Off Bottom"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unitScale": true
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 0,
+        "y": 9
+      },
+      "id": 59,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "/^Rig Status$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 55,
+          "refId": "A"
+        }
+      ],
+      "title": "Rig Status",
       "type": "stat"
     },
     {
@@ -3288,7 +3374,7 @@
           "format": "table",
           "hide": false,
           "rawQuery": true,
-          "rawSql": "SELECT \r\n  \"0112\" AS \"HP\", \r\n  \"0108\" AS \"Bit Depth\", \r\n  \"0110\" AS \"Hole Depth\", \r\n  \"0111\" AS \"TVD\", \r\n  \"0139\" AS \"Lag Depth\", \r\n  \"0116\" AS \"WOB\", \r\n  \"0114\" AS \"HKLD\",\r\n  \"0130\" AS \"GPM\", \r\n  \"0121\" AS \"SPP\", \r\n  \"3021\" AS \"SPP Diff\", \r\n  \"0122\" AS \"CSG\", \r\n  \"0113\" AS \"ROP\", \r\n  \"0120\" AS \"RPM\", \r\n  \"3019\" AS \"TD RPM\", \r\n  \"3018\" AS \"Motor RPM\", \r\n  \"0118\" AS \"Torque\",\r\n  \"3012\" AS \"Total SPM\", \r\n  \"3039\" AS \"Down Strokes\", \r\n  \"0138\" AS \"Lag Strokes\", \r\n  \"0137\" AS \"Total Strokes\", \r\n  \"3013\" AS \"Active bbls\", \r\n  \"3009\" AS \"Bit Interval ft\", \r\n  \"Time\" AS \"Time\",\r\n\r\n\r\n  \"3008\" / 3600 AS \"Circulation Time hr\",\r\n  CASE \r\n    WHEN \"3011\" / 60 < 0 THEN 0\r\n    ELSE \"3011\"\r\n  END AS \"Down Time h:m:s\",\r\n  CASE \r\n    WHEN \"3010\" / 60 < 0 THEN 0\r\n    ELSE \"3010\"\r\n  END AS \"Lag Time h:m:s\",\r\n  CASE \r\n    WHEN \"0137\" > \"0138\" THEN 0\r\n    WHEN \"0138\" = 0 THEN 0\r\n    ELSE (\"0138\" - \"0137\") / \"3012\" * 60\r\n  END AS \"CBU Time Left h:m:s\",\r\n  \"3007\" / 3600 AS \"Drilling Time hr\",\r\n\r\n\r\n  \"1224\" AS \"Total Hydrocarbons %\", \r\n  \"1212\" AS \"C1\", \r\n  \"1213\" AS \"C2\", \r\n  \"1214\" AS \"C3\", \r\n  \"1215\" AS \"iC4\", \r\n  \"1216\" AS \"nC4\", \r\n  \"1217\" AS \"iC5\", \r\n  \"1218\" AS \"nC5\",\r\n  \r\n  \"3030\" / 10000 AS \"GCT Total Hydrocarbons %\", \r\n  \"3020\" AS \"GCT C1\", \r\n  \"3121\" AS \"GCT C2\", \r\n  \"3022\" AS \"GCT C3\", \r\n  \"3023\" AS \"GCT iC4\", \r\n  \"3024\" AS \"GCT nC4\", \r\n  \"3025\" AS \"GCT iC5\",\r\n  \"3026\" AS \"GCT nC5\", \r\n  \"3027\" AS \"GCT C6\", \r\n  \"3028\" AS \"GCT C7\", \r\n  \"3029\" AS \"GCT C8\"\r\n  \r\nFROM \r\n  postgres\r\nLIMIT 1;\r\n",
+          "rawSql": "SELECT \r\n  \"0112\" AS \"HP\", \r\n  \"0108\" AS \"Bit Depth\", \r\n  \"0110\" AS \"Hole Depth\", \r\n  \"0111\" AS \"TVD\", \r\n  \"0139\" AS \"Lag Depth\", \r\n  \"0116\" AS \"WOB\", \r\n  \"0114\" AS \"HKLD\",\r\n  \"0130\" AS \"GPM\", \r\n  \"0121\" AS \"SPP\", \r\n  \"3021\" AS \"SPP Diff\", \r\n  \"0122\" AS \"CSG\", \r\n  \"0113\" AS \"ROP\", \r\n  \"0120\" AS \"RPM\", \r\n  \"3019\" AS \"TD RPM\", \r\n  \"3018\" AS \"Motor RPM\", \r\n  \"0118\" AS \"Torque\",\r\n  \"3012\" AS \"Total SPM\", \r\n  \"3039\" AS \"Down Strokes\", \r\n  \"0138\" AS \"Lag Strokes\", \r\n  \"0137\" AS \"Total Strokes\", \r\n  \"3013\" AS \"Active bbls\", \r\n  \"3009\" AS \"Bit Interval ft\", \r\n  \"Time\" AS \"Time\",\r\n\r\n\r\n  \"3008\" / 3600 AS \"Circulation Time hr\",\r\n  CASE \r\n    WHEN \"3011\" / 60 < 0 THEN 0\r\n    ELSE \"3011\"\r\n  END AS \"Down Time h:m:s\",\r\n  CASE \r\n    WHEN \"3010\" / 60 < 0 THEN 0\r\n    ELSE \"3010\"\r\n  END AS \"Lag Time h:m:s\",\r\n  CASE \r\n    WHEN \"0137\" > \"0138\" THEN 0\r\n    WHEN \"0138\" = 0 THEN 0\r\n    ELSE (\"0138\" - \"0137\") / \"3012\" * 60\r\n  END AS \"CBU Time Left h:m:s\",\r\n  \"3007\" / 3600 AS \"Drilling Time hr\",\r\n\r\n  CASE \r\n    WHEN \"0110\" = \"0108\" THEN 0 \r\n    WHEN abs(\"0110\" - \"0108\") > 110 THEN 1\r\n    WHEN \"0110\" > \"0108\" THEN 2\r\n  END AS \"Rig Status\",\r\n\r\n\r\n  \"1224\" AS \"Total Hydrocarbons %\", \r\n  \"1212\" AS \"C1\", \r\n  \"1213\" AS \"C2\", \r\n  \"1214\" AS \"C3\", \r\n  \"1215\" AS \"iC4\", \r\n  \"1216\" AS \"nC4\", \r\n  \"1217\" AS \"iC5\", \r\n  \"1218\" AS \"nC5\",\r\n  \r\n  \"3030\" / 10000 AS \"GCT Total Hydrocarbons %\", \r\n  \"3020\" AS \"GCT C1\", \r\n  \"3121\" AS \"GCT C2\", \r\n  \"3022\" AS \"GCT C3\", \r\n  \"3023\" AS \"GCT iC4\", \r\n  \"3024\" AS \"GCT nC4\", \r\n  \"3025\" AS \"GCT iC5\",\r\n  \"3026\" AS \"GCT nC5\", \r\n  \"3027\" AS \"GCT C6\", \r\n  \"3028\" AS \"GCT C7\", \r\n  \"3029\" AS \"GCT C8\"\r\n  \r\n\r\nFROM \r\n  postgres\r\nLIMIT 1;\r\n",
           "refId": "A",
           "sql": {
             "columns": [
@@ -3313,15 +3399,15 @@
       "type": "table"
     }
   ],
-  "refresh": "5s",
+  "refresh": false,
   "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "2024-03-06T01:39:44.612Z",
-    "to": "2024-03-06T17:39:44.612Z"
+    "from": "2024-03-03T17:39:44.612Z",
+    "to": "2024-03-09T01:39:44.612Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -3340,6 +3426,6 @@
   "timezone": "",
   "title": "Gauges",
   "uid": "eee5498f-0aeb-4710-8658-791f21384988",
-  "version": 24,
+  "version": 26,
   "weekStart": ""
 }
